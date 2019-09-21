@@ -30,6 +30,7 @@ def concatenate(tensors, axis=-1):
   return tf.concat(axis, tensors)
 
 def LRN2D(x):
+  # import tensorflow as tf
   return tf.nn.lrn(x, alpha=1e-4, beta=0.75)
 
 def conv2d_bn(
@@ -135,6 +136,9 @@ def load_weights():
     paths[n.replace('.csv', '')] = dirPath + '/' + n
 
   for name in weights:
+    curr = weights.index(name) + 1
+    tot = len(weights)
+    print("Loading weight [{}/{}] - {}".format(curr,tot,name))
     if 'conv' in name:
       conv_w = genfromtxt(paths[name + '_w'], delimiter=',', dtype=None)
       conv_w = np.reshape(conv_w, conv_shape[name])
