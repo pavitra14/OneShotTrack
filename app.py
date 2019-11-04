@@ -5,7 +5,7 @@ import tensorflow as tf
 from tensorflow.python.util import deprecation
 deprecation._PRINT_DEPRECATION_WARNINGS = False
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
-
+from gui import SharedCell
 # Global Variables
 print("Loading model from file")
 model = load_model("NN/model_all.h5", custom_objects={'tf':tf})
@@ -23,7 +23,9 @@ def menu():
         create_input_image_embeddings(model)
         menu()
     elif choice == 3:
-        recognize_faces_in_cam(model)
+        cell = SharedCell()
+        print("Shared Cell created, please start gui.py")
+        recognize_faces_in_cam(model, cell)
         menu()
     else:
         exit()

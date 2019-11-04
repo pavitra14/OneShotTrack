@@ -21,7 +21,6 @@ import tensorflow as tf
 tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 from PIL import Image
 from PIL import ImageTk
-import tkinter as tk
 import imutils
 import time
 # from utils import LRN2D
@@ -92,9 +91,8 @@ def create_input_image_embeddings(model):
         f.write(pickle.dumps(input_embeddings))
     return input_embeddings
 
-def recognize_faces_in_cam(model):
+def recognize_faces_in_cam(model, t = None):
     input_embeddings = pickle.loads(open("NN/embeddings.pickle", "rb").read())
-
     cv2.namedWindow("OneShot")
     cv2.resizeWindow("OneShot", 100, 100)
     vc = cv2.VideoCapture(0)
@@ -124,14 +122,17 @@ def recognize_faces_in_cam(model):
                 print(Fore.RED + "IDENTITY DETECTED: " + Fore.GREEN + "{}".format(str(identity)))
                 print(Style.RESET_ALL)
                 img = cv2.rectangle(frame,(x1, y1),(x2, y2),(0,255,0),2)
-                cv2.putText(img, str(identity), (x1+5,y1-5), font, 1, (0,0,255), 2)
-        
+                cv2.putText(img, str(identity), (x1+5,y1-5), font, 1, (0,0,255), 2)            
+                if t is not None:
+                    t.AddToList(str(identity))
+
         key = cv2.waitKey(100)
         cv2.imshow("OneShot", img)
 
         if key == 27: # exit on ESC
             break
     # vc.release()
+    t.reset()
     cv2.destroyAllWindows()
 
 
