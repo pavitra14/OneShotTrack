@@ -43,7 +43,7 @@ jupyterlab-server==1.0.0
 Keras==2.2.5
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.0
-lxml==4.4.1
+lxml==4.6.3
 Markdown==3.1.1
 MarkupSafe==1.1.1
 mistune==0.8.4
